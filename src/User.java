@@ -147,16 +147,59 @@ public class User {
         }
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userID=" + userID +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public void showOrderHistory(){
+        System.out.printf("\n---- %s's order history ----\n", getUsername());
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = Database.getConnection();
+            ps = connection.prepareStatement("SELECT orderID, date_created, SUM(total)" +
+                                                 "FROM orderhistory WHERE userID = ? GROUP BY orderID" );
+            ps.setInt(1, userID);
+            resultSet = ps.executeQuery();
+
+            while(resultSet.next()){
+                System.out.printf("\nOrderID: %d --- Created on %tF --- Total: %.2flv\n", resultSet.getInt(1),
+                        resultSet.getDate(2), resultSet.getBigDecimal(3));
+
+                displayItems(connection, resultSet.getInt(1));
+                System.out.println();
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            Database.close(connection, ps, resultSet);
+        }
     }
-}
+
+    public void displayItems(Connection connection, int orderID){
+        PreparedStatement ps;
+        ResultSet resultSet2;
+
+        try {
+            ps = connection.prepareStatement("SELECT * FROM Books, OrderedItem " +
+                    "WHERE OrderedItem.orderID = ? " +
+                    "AND Books.isbn = OrderedItem.isbn");
+            ps.setInt(1, orderID);
+            resultSet2 = ps.executeQuery();
+
+            while(resultSet2.next()){
+                System.out.printf("-> %s, %s - %.2flv - %s \n", resultSet2.getString(2),
+                        resultSet2.getString(3), resultSet2.getBigDecimal(9),
+                        isRented(resultSet2.getBoolean(10)));
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public String isRented(Boolean b) {
+        return b ? "rented" : "bought";
+    }
+
+    }

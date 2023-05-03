@@ -86,7 +86,8 @@ public class Menu {
     }
 
     public void accountMenu() {
-        System.out.print("\n---- Menu ----\n1.View books.\n2.Search books.\n3.Make an order.\n4.View order history.\nEnter your choice: ");
+        System.out.print("\n---- Menu ----\n1.View books.\n2.Search books.\n3.Make an order.\n" +
+                         "4.View order history.\nEnter your choice: ");
 
         Scanner input = new Scanner(System.in);
         int choice = input.nextInt();
@@ -113,9 +114,18 @@ public class Menu {
                 Order order = new Order(orderId.nextInt(1000), user.getUserID(),
                                         new Date(System.currentTimeMillis()));
                 order.makeOrder();
+                accountMenu();
                 break;
 
-            case (4): // user.getOrderHistory();
+            case (4):
+                Scanner input3 = new Scanner(System.in);
+
+                System.out.print("Enter you username again: ");
+                user.setUsername(input3.nextLine());
+                user.setUserID(getUserID(user.getUsername()));
+
+                user.showOrderHistory();
+                accountMenu();
                 break;
 
             default:

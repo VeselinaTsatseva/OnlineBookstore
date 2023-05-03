@@ -34,7 +34,7 @@ public class Order {
 
         addBookToOrder(bookIsbn);
 
-        System.out.println("\n1.Add another book.\n2.Finalize order.\nEnter your choice: ");
+        System.out.print("\n1.Add another book.\n2.Finalize order.\nEnter your choice: ");
         Scanner input = new Scanner(System.in);
         int choice = input.nextInt();
 
@@ -44,12 +44,12 @@ public class Order {
                 break;
 
             case(2):
+                addOrderToDB();
+
                 for (Book book : items){
                     updateQuantity(book, book.getQuantity() - 1);
-                    total += book.getPrice();
+                    addItemToDB(book);
                 }
-
-                addOrderToDB();
                 break;
 
             default:
@@ -70,11 +70,13 @@ public class Order {
         switch (choice){
             case(1):
                 book.setRented(false);
+                total += book.getPrice();
                 break;
 
             case(2):
                 book.setRented(true);
                 book.setPrice(0);
+                total += book.getPrice();
                 break;
 
             default:
@@ -122,8 +124,6 @@ public class Order {
             psInsert.setDouble(3,book.getPrice());
             psInsert.setBoolean(4, book.getRented());
             psInsert.executeUpdate();
-
-            System.out.println("Book added successfully!");
 
         } catch (SQLException e){
             e.printStackTrace();

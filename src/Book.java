@@ -79,7 +79,7 @@ public class Book {
     }
 
     public static void showBooks(){
-        System.out.println("---- Books ----");
+        System.out.println("\n---- Books ----");
 
         Connection connection = null;
         PreparedStatement ps = null;
