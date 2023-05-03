@@ -156,7 +156,7 @@ public class User {
 
         try {
             connection = Database.getConnection();
-            ps = connection.prepareStatement("SELECT orderID, date_created, SUM(total)" +
+            ps = connection.prepareStatement("SELECT orderID, date_created, SUM(price)" +
                                                  "FROM orderhistory WHERE userID = ? GROUP BY orderID" );
             ps.setInt(1, userID);
             resultSet = ps.executeQuery();
