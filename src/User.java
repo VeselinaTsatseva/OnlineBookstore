@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.regex.Pattern;
 
 public class User {
 
@@ -12,10 +13,10 @@ public class User {
 
     public User() {
         setUsername("");
-        setPassword("");
+        this.password = "";
         setFirstName("");
         setLastName("");
-        setEmail("");
+        this.email = "";
         setPhone("");
     }
 
@@ -49,7 +50,18 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        String pwdRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
+
+        Pattern pattern = Pattern.compile(pwdRegex);
+
+        if(pattern.matcher(password).matches()){
+            this.password = password;
+        } else {
+            System.out.println("Password must contain at least: one digit, one lowercase and" +
+                    " one uppercase latin letters and must be between 8 and 20 characters!");
+            Menu menu = new Menu();
+            menu.menu();
+        }
     }
 
     public String getFirstName() {
@@ -73,7 +85,18 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        if(pattern.matcher(email).matches()){
+            this.email = email;
+        } else {
+            System.out.println("Email is not valid!");
+            Menu menu = new Menu();
+            menu.menu();
+        }
     }
 
     public String getPhone() {
