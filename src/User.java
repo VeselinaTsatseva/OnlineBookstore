@@ -86,7 +86,7 @@ public class User {
 
 
     public void signUp(String username, String password, String firstName,
-                       String lastName, String email, String phone){
+                       String lastName, String email, String phone)  {
         Connection connection = null;
         PreparedStatement psInsert = null;
         Menu menu = new Menu();
@@ -103,10 +103,12 @@ public class User {
             psInsert.setString(6, phone);
             psInsert.executeUpdate();
 
-            System.out.println("Account created successfully!");
-            System.out.println("Please log in to your account!");
+            System.out.println("\nAccount created successfully!");
+            System.out.println("Please log in to your account!\n");
             menu.menu();
 
+        } catch (SQLIntegrityConstraintViolationException e){
+            System.out.println("Username or email is already taken!");
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
@@ -157,7 +159,7 @@ public class User {
         try {
             connection = Database.getConnection();
             ps = connection.prepareStatement("SELECT orderID, date_created, SUM(price)" +
-                                                 "FROM orderhistory WHERE userID = ? GROUP BY orderID" );
+                                                 "FROM orderhistory WHERE userID = ? GROUP BY orderID, date_created ORDER BY date_created" );
             ps.setInt(1, userID);
             resultSet = ps.executeQuery();
 
@@ -182,8 +184,8 @@ public class User {
 
         try {
             ps = connection.prepareStatement("SELECT * FROM Books, OrderedItem " +
-                    "WHERE OrderedItem.orderID = ? " +
-                    "AND Books.isbn = OrderedItem.isbn");
+                                                   "WHERE OrderedItem.orderID = ? " +
+                                                   "AND Books.isbn = OrderedItem.isbn");
             ps.setInt(1, orderID);
             resultSet2 = ps.executeQuery();
 
@@ -200,6 +202,25 @@ public class User {
 
     public String isRented(Boolean b) {
         return b ? "rented" : "bought";
+    }
+
+    public void deleteUser(){
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try{
+            connection = Database.getConnection();
+            ps = connection.prepareStatement("DELETE FROM Users WHERE userID = ?");
+            ps.setInt(1, userID);
+            ps.executeUpdate();
+
+            System.out.println("Account deleted successfully!");
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            Database.close(connection, ps, null);
+        }
     }
 
     }

@@ -78,6 +78,8 @@ public class Book {
         isRented = rented;
     }
 
+
+
     public static void showBooks(){
         System.out.println("\n---- Books ----");
 

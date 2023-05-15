@@ -6,7 +6,6 @@ public class Menu {
 
     private User user = new User();
 
-
     public User getUserInfo(){
         Scanner input = new Scanner(System.in);
 
@@ -87,7 +86,7 @@ public class Menu {
 
     public void accountMenu() {
         System.out.print("\n---- Menu ----\n1.View books.\n2.Search books.\n3.Make an order.\n" +
-                         "4.View order history.\nEnter your choice: ");
+                         "4.View order history.\n5.Delete account.\nEnter your choice: ");
 
         Scanner input = new Scanner(System.in);
         int choice = input.nextInt();
@@ -126,6 +125,15 @@ public class Menu {
 
                 user.showOrderHistory();
                 accountMenu();
+                break;
+
+            case (5):
+                Scanner input4 = new Scanner(System.in);
+
+                System.out.print("Enter you username again: ");
+                user.setUsername(input4.nextLine());
+                user.setUserID(getUserID(user.getUsername()));
+                user.deleteUser();
                 break;
 
             default:
