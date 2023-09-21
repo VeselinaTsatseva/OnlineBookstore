@@ -61,10 +61,10 @@ public class User {
         if(pattern.matcher(password).matches()){
             this.password = password;
         } else {
-            System.out.println("Password must contain at least: one digit, one lowercase and" +
-                    " one uppercase latin letters and must be between 8 and 20 characters!");
-            LoginPage menu = new LoginPage();
-            menu.menu();
+            System.out.println("\nPassword must contain at least: one digit, one lowercase and" +
+                    " one uppercase latin letters and must be between 8 and 20 characters!\n");
+            UserController userController = new UserController();
+            userController.signUp();
         }
     }
 
@@ -97,7 +97,7 @@ public class User {
         if(pattern.matcher(email).matches()){
             this.email = email;
         } else {
-            System.out.println("Email is not valid!");
+            System.out.println("\nEmail is not valid!\n");
             LoginPage menu = new LoginPage();
             menu.menu();
         }

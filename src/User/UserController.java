@@ -10,7 +10,6 @@ public class UserController implements IUserController {
 
     private User user = new User();
     private UserDB userDB = new UserDB();
-    private LoginPage loginPage;
 
     public UserController() {
     }
@@ -42,6 +41,8 @@ public class UserController implements IUserController {
 
     @Override
     public void signUp() throws SQLException {
+        LoginPage loginPage = new LoginPage();
+
         user = getUserInfo();
         userDB.add(user.getUsername(), user.getPassword(), user.getFirstName(),
                 user.getLastName(), user.getEmail(), user.getPhone());

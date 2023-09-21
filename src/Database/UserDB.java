@@ -1,6 +1,7 @@
 package Database;
 
 import LoginInterface.UserPage;
+import User.UserController;
 
 import java.sql.*;
 
@@ -37,6 +38,7 @@ public class UserDB {
 
     public void get(String username, String password) throws SQLException {
         UserPage userPage = new UserPage();
+        UserController userController = new UserController();
 
         try {
             connection = DBUtil.getDataSource().getConnection();
@@ -45,34 +47,41 @@ public class UserDB {
             resultSet = ps.executeQuery();
 
             if(!resultSet.isBeforeFirst()){
-                System.out.println("Wrong username or password!");
+                System.out.println("\nUser not found! Try again!\n");
+                userController.logIn();
             } else {
                 while(resultSet.next()){
                     String pwd = resultSet.getString("pwd");
                     if(pwd.equals(password)){
                         userPage.accountMenu();
                     } else {
-                        System.out.println("Wrong username or password!");
+                        System.out.println("\nWrong password! Try again!\n");
+                        userController.logIn();
                     }
                 }
             }
-
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
 
     public void delete(String username) {
+        UserController userController = new UserController();
+
         try{
             connection = DBUtil.getDataSource().getConnection();
             ps = connection.prepareStatement("DELETE FROM Users WHERE username = ?");
             ps.setString(1, username);
             ps.executeUpdate();
 
-            System.out.println("Account deleted successfully!");
-
+            if (resultSet == null){
+                System.out.println("User not found! Try again!\n");
+                userController.deleteUser();
+            } else {
+                System.out.println("Account deleted successfully!");
+            }
         } catch (SQLException e){
-            e.printStackTrace();
+           // e.getSQLState();
         }
     }
 
@@ -88,7 +97,7 @@ public class UserDB {
             }
 
         } catch (SQLException e){
-            e.printStackTrace();
+            e.getMessage();
         }
         return 0;
     }

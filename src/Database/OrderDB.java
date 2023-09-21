@@ -4,10 +4,7 @@ import Book.Book;
 import Order.Order;
 import User.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class OrderDB {
 
@@ -18,7 +15,7 @@ public class OrderDB {
     public OrderDB() {
     }
 
-    public void addOrder(Order order){
+    public void addOrder(Order order) {
         PreparedStatement psInsert;
 
         try {
@@ -34,7 +31,7 @@ public class OrderDB {
             System.out.println("Order made successfully!");
 
         } catch (SQLException e){
-            e.printStackTrace();
+            //e.getSQLState();
         }
     }
 
@@ -92,7 +89,7 @@ public class OrderDB {
             }
 
         } catch (SQLException e){
-            e.printStackTrace();
+            //e.getMessage();
         }
     }
 

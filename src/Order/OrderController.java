@@ -22,7 +22,7 @@ public class OrderController implements IOrderController{
     }
 
     @Override
-    public void makeOrder(){
+    public void makeOrder() {
         Random orderId = new Random();
         Scanner input = new Scanner(System.in);
 
@@ -42,7 +42,6 @@ public class OrderController implements IOrderController{
         switch (choice){
             case(1):
                 addBookToOrder();
-                //break;
 
             case(2):
                 orderDB.addOrder(order);
@@ -70,7 +69,6 @@ public class OrderController implements IOrderController{
             System.out.println("This book is not available now!\nPick another.");
             addBookToOrder();
         }
-        //checkQuantity(book);
         order.addItem(book);
 
         System.out.print("\nDo you want to:\n1.Buy the book.\n2.Rent the book.\nEnter your choice: ");
@@ -106,15 +104,4 @@ public class OrderController implements IOrderController{
 
         orderDB.getOrderHistory(user);
     }
-
-/*
-    public void checkQuantity(Book book){
-        int quantity = book.getQuantity();
-
-        if(quantity <= 0) {
-            System.out.println("This book is not available now!\nPick another.");
-            addBookToOrder();
-        }
-    }
-*/
 }
