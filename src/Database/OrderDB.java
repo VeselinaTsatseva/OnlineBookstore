@@ -31,7 +31,7 @@ public class OrderDB {
             System.out.println("Order made successfully!");
 
         } catch (SQLException e){
-            //e.getSQLState();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 
@@ -49,7 +49,7 @@ public class OrderDB {
             psInsert.executeUpdate();
 
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 
@@ -70,7 +70,7 @@ public class OrderDB {
             }
 
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 
@@ -89,7 +89,7 @@ public class OrderDB {
             }
 
         } catch (SQLException e){
-            //e.getMessage();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 
@@ -105,7 +105,7 @@ public class OrderDB {
             ps.executeUpdate();
 
         } catch (SQLException e){
-            // e.getSQLState();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 }

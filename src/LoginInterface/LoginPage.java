@@ -9,7 +9,7 @@ public class LoginPage {
 
     private UserController userC = new UserController();
 
-    public LoginPage() throws SQLException {
+    public LoginPage() {
     }
 
     public void menu() throws SQLException {

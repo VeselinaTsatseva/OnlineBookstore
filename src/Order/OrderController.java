@@ -30,8 +30,7 @@ public class OrderController implements IOrderController{
         user.setUsername(input.nextLine());
         user.setUserID(userDB.getUserID(user.getUsername()));
 
-        order = new Order(orderId.nextInt(1000), user.getUserID(),
-                new Date(System.currentTimeMillis()));
+        order = new Order(orderId.nextInt(1000), user.getUserID(), new Date(System.currentTimeMillis()));
 
         addBookToOrder();
 

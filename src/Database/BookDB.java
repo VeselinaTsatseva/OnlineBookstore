@@ -64,7 +64,7 @@ public class BookDB {
             }
 
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 
@@ -79,7 +79,7 @@ public class BookDB {
                 displayBookInfo(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 
@@ -94,7 +94,7 @@ public class BookDB {
                 displayBookInfo(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nThere was an error! Try again!\n");
         }
     }
 

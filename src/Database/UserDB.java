@@ -1,6 +1,7 @@
 package Database;
 
 import LoginInterface.UserPage;
+import User.IUserController;
 import User.UserController;
 
 import java.sql.*;
@@ -10,6 +11,7 @@ public class UserDB {
     private Connection connection;
     private PreparedStatement ps;
     private ResultSet resultSet;
+    private IUserController userController = new UserController();
 
     public void add(String username, String password, String firstName, String lastName,
                     String email, String phone) throws SQLException {
@@ -38,7 +40,6 @@ public class UserDB {
 
     public void get(String username, String password) throws SQLException {
         UserPage userPage = new UserPage();
-        UserController userController = new UserController();
 
         try {
             connection = DBUtil.getDataSource().getConnection();
@@ -61,13 +62,12 @@ public class UserDB {
                 }
             }
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println("\nThere was an error! Try again!\n");
+            userController.logIn();
         }
     }
 
-    public void delete(String username) {
-        UserController userController = new UserController();
-
+    public void delete(String username) throws SQLException {
         try{
             connection = DBUtil.getDataSource().getConnection();
             ps = connection.prepareStatement("DELETE FROM Users WHERE username = ?");
@@ -77,7 +77,8 @@ public class UserDB {
             System.out.println("Account deleted successfully!");
 
         } catch (SQLException e){
-            System.out.println("User not found! Try again!\n");
+            System.out.println("\nThere was an error! Try again!\n");
+            userController.deleteUser();
         }
     }
 
@@ -93,7 +94,7 @@ public class UserDB {
             }
 
         } catch (SQLException e){
-            e.getMessage();
+            System.out.println("\nThere was an error! Try again!\n");
         }
         return 0;
     }

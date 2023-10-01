@@ -66,7 +66,7 @@ public class UserController implements IUserController {
     }
 
     @Override
-    public void deleteUser() {
+    public void deleteUser() throws SQLException {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter your username again: ");
         String username = input.nextLine();

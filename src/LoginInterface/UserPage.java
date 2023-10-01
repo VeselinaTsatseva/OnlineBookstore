@@ -15,7 +15,7 @@ public class UserPage {
     private OrderController orderC = new OrderController();
     private BookController bookC = new BookController();
 
-    public UserPage() throws SQLException {
+    public UserPage() {
     }
 
     public void accountMenu() throws SQLException {
