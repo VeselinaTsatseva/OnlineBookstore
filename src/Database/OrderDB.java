@@ -96,4 +96,16 @@ public class OrderDB {
     public String isRented(Boolean b) {
         return b ? "rented" : "bought";
     }
+
+    public void deleteOrder(int userId){
+        try{
+            connection = DBUtil.getDataSource().getConnection();
+            ps = connection.prepareStatement("DELETE FROM Orders WHERE userID = ?");
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+
+        } catch (SQLException e){
+            // e.getSQLState();
+        }
+    }
 }

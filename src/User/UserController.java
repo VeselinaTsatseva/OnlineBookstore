@@ -1,5 +1,6 @@
 package User;
 
+import Database.OrderDB;
 import Database.UserDB;
 import LoginInterface.LoginPage;
 
@@ -10,6 +11,7 @@ public class UserController implements IUserController {
 
     private User user = new User();
     private UserDB userDB = new UserDB();
+    private OrderDB orderDB = new OrderDB();
 
     public UserController() {
     }
@@ -66,10 +68,11 @@ public class UserController implements IUserController {
     @Override
     public void deleteUser() {
         Scanner input = new Scanner(System.in);
-
         System.out.print("Enter your username again: ");
-        user.setUsername(input.nextLine());
+        String username = input.nextLine();
 
-        userDB.delete(user.getUsername());
+        userDB.delete(username);
+
+        orderDB.deleteOrder(userDB.getUserID(username));
     }
 }

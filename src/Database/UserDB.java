@@ -74,14 +74,10 @@ public class UserDB {
             ps.setString(1, username);
             ps.executeUpdate();
 
-            if (resultSet == null){
-                System.out.println("User not found! Try again!\n");
-                userController.deleteUser();
-            } else {
-                System.out.println("Account deleted successfully!");
-            }
+            System.out.println("Account deleted successfully!");
+
         } catch (SQLException e){
-           // e.getSQLState();
+            System.out.println("User not found! Try again!\n");
         }
     }
 
