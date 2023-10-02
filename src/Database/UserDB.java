@@ -2,7 +2,6 @@ package Database;
 
 import LoginInterface.UserPage;
 import User.IUserController;
-import User.UserController;
 
 import java.sql.*;
 
@@ -11,7 +10,7 @@ public class UserDB {
     private Connection connection;
     private PreparedStatement ps;
     private ResultSet resultSet;
-    private IUserController userController = new UserController();
+    private IUserController userController ;
 
     public void add(String username, String password, String firstName, String lastName,
                     String email, String phone) throws SQLException {
